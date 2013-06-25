@@ -1,0 +1,379 @@
+{
+	name: "Gulf of Mexico Restoration Explorer",
+	text: "The Restoration Explorer allows stakeholders to examine ecological and socioeconomic variables for oyster reef restoration suitability. An oyster reef index was compiled for each Gulf state and includes those variables important for ensuring restoration success. Individual variables of the index can be weighted for importance when identifying potential sites for oyster reefs. Site selection suitability is constrained to the level of detail provided by the input data. This Explorer was not designed for site planning, but scenario planning across a particular state." ,
+	globalText: 'Adjusting the weight to the far left (below "Low") removes the variable from consideration',
+	regions:[
+	{
+		"methods": "./xml/Alabama_RestExp.pdf",
+		"items": [
+			{
+				"text": "Ecological Variables",
+				"type": "header"
+			},
+			{
+				"default": 5.0,
+				"index": 1,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Depth Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 2,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Historic Reefs",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 3,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Salinity Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 4,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Spat Settlement Score",
+				"type": "layer"
+			},
+			{
+				"text": "Socioeconomic Variables",
+				"type": "header"
+			},
+			{
+				"default": 5.0,
+				"index": 5,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Natural Resource Job Dependence Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 6,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Project Permit Feasibility Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 7,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Shoreline Erosion Score",
+				"type": "layer"
+			}
+		],
+		"name": "Alabama",
+		"url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Restoration_Explorer/Alabama/ImageServer"
+	},
+	{
+		"methods": "./xml/Mississippi_RestExp.html",
+		"items": [
+			{
+				"text": "Ecological Variables",
+				"type": "header"
+			},
+			{
+				"default": 5.0,
+				"index": 1,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Depth Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 2,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Current Oyster Reef Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 3,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Historic Oyster Reef Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 4,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Salinity Score",
+				"type": "layer"
+			},
+			{
+				"text": "Socioeconomic Variables",
+				"type": "header"
+			},
+			{
+				"default": 5.0,
+				"index": 5,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Percent Employed in Natural Resources Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 6,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Project Permit Feasibility Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 7,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Percent Employed in Construction Score",
+				"type": "layer"
+			},
+			{
+				"default": 5.0,
+				"index": 8,
+				"max": 10.0,
+				"min": 0.0,
+				"step": 1.0,
+				"text": "Proximity to National Park Score",
+				"type": "layer"
+			}
+		],
+		"name": "Mississippi",
+		"url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Restoration_Explorer/Mississippi/ImageServer"
+	},
+	{
+	"methods": "./xml/Louisiana_RestExp.pdf",
+    "items": [
+        {
+            "text": "Ecological Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 1,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Salinity Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 2,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Depth Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 3,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Distance To Wetlands Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 4,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Historic Reef Score",
+            "type": "layer"
+        },
+        {
+            "text": "Socioeconomic Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 5,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Permit Feasibility Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 6,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Erosion Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 7,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Natural Resource Job Dependence Score",
+            "type": "layer"
+        }
+    ],
+    "name": "Louisiana",
+    "url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Restoration_Explorer/Louisiana/ImageServer"
+	},
+	{
+	"methods": "./xml/Florida_RestExp.pdf",
+    "items": [
+        {
+            "text": "Ecological Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 1,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Depth Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 2,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Historic Reef Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 3,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Salinity Score",
+            "type": "layer"
+        },
+        {
+            "text": "Socioeconomic Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 4,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Erosion Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 5,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Natural Resource Job Dependence Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 6,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Permit Feasibility Score",
+            "type": "layer"
+        }
+    ],
+    "name": "Florida",
+    "url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Restoration_Explorer/Florida/ImageServer"
+	},
+	{
+	"methods": "./xml/Texas_RestExp.pdf",
+    "items": [
+        {
+            "text": "Ecological Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 1,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Depth Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 2,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Salinity Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 3,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Historic Reef Score",
+            "type": "layer"
+        },
+        {
+            "text": "Socioeconomic Variables",
+            "type": "header"
+        },
+        {
+            "default": 5.0,
+            "index": 4,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Erosion Score",
+            "type": "layer"
+        },
+        {
+            "default": 5.0,
+            "index": 5,
+            "max": 10.0,
+            "min": 0.0,
+            "step": 1.0,
+            "text": "Natural Resource Job Dependence Score",
+            "type": "layer"
+        }
+    ],
+    "name": "Texas",
+    "url": "http://dev.services.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Restoration_Explorer/Texas/ImageServer"
+	}
+	]
+}

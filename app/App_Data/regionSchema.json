@@ -1,0 +1,82 @@
+{
+    "$schema": "http://json-schema.org/draft-03/schema#",
+    "title": "Geosite configuration",
+    "type": "object",
+    "properties": {
+        "googleAnalyticsPropertyId": {"type": "string", "required": false},
+        "titleMain": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string", "required": true},
+                "url": {"type": "string", "required": false}
+            },
+            "additionalProperties": false,
+            "required": true
+        },
+        "titleDetail": {
+            "type": "object",
+            "properties": {
+                "text": {"type": "string", "required": true},
+                "url": {"type": "string", "required": false}
+            },
+            "additionalProperties": false,
+            "required": true
+        },
+        "headerLinks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string", "required": true},
+                    "url": {"type": "string", "required": true},
+                    "popup": {"type": "boolean", "required": false}
+                },
+                "additionalProperties": false
+            }
+        },
+        "sidebarLinks": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string", "required": true},
+                    "url": {"type": "string", "required": true}
+                },
+                "additionalProperties": false
+            }
+        },
+        "initialExtent": {
+            "type": "array",
+            "required": true,
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {"type": "number"}
+        },
+        "basemaps": {
+            "type": "array", 
+            "required": true,
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string", "required": true},
+                    "url": {"type": "string", "required": true}
+                },
+                "additionalProperties": false
+            }
+        },
+        "pluginOrder": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+        "printServerUrl": {
+            "type": "string",
+            "required": false
+        },
+        "helpUrl": {
+            "type": "string",
+            "required": false
+        }
+    },
+    "additionalProperties": false
+}
