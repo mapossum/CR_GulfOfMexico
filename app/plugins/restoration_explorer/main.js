@@ -12,6 +12,8 @@ define([
 		"dijit/MenuItem",
 		"dijit/layout/ContentPane",
 		"dijit/form/HorizontalSlider",
+		"dijit/form/CheckBox",
+		"dijit/form/RadioButton",
 		"dojo/dom",
 		"dojo/dom-class",
 		"dojo/dom-style",
@@ -40,6 +42,8 @@ define([
 					MenuItem,
 					ContentPane,
 					HorizontalSlider,
+					CheckBox,
+					RadioButton,
 					dom,
 					domClass,
 					domStyle,
@@ -90,6 +94,10 @@ define([
 					//this.getTemplate("hi")
 					
 					console.log(this.explorerObject);
+					
+					if (this.explorerObject.betweenGroups == undefined) {
+						this.explorerObject.betweenGroups = "+";
+					}
 					
 					this.textnode = domConstruct.create("div", { innerHTML: "<p style='padding:8px'>" + this.explorerObject.text + "</p>" });
 					dom.byId(this.container).appendChild(this.textnode);
@@ -232,6 +240,13 @@ define([
 			   
 					array.forEach(geography.items, lang.hitch(this,function(entry, i){
 					
+						
+						if (entry.group == undefined) {
+						
+							entry.group = "ungrouped";
+						
+						}
+						
 						if (entry.type == "header") {
 
 							nslidernodeheader = domConstruct.create("div", {style:"margin-top:0px;margin-bottom:10px", innerHTML: "<b>" + entry.text + ":</b>"});
@@ -241,20 +256,12 @@ define([
 						
 						if (entry.type == "text") {
 
-							nslidernodeheader = domConstruct.create("div", {style:"margin-top:0px;margin-bottom:10px", innerHTML: entry.text});
+							nslidernodeheader = domConstruct.create("div", {style:"margin-top:10px;margin-bottom:10px", innerHTML: entry.text});
 							this.sliderpane.domNode.appendChild(nslidernodeheader);	
 							
 						} 
 						
-						if (entry.type == "layer") {
-						
-							nslidernodetitle = domConstruct.create("div", {innerHTML: entry.text});
-							this.sliderpane.domNode.appendChild(nslidernodetitle);
-							
-							
- 							nslidernode = domConstruct.create("div");
-							this.sliderpane.domNode.appendChild(nslidernode); 
-							
+						if (entry.type == "layer") {						
 					
 							steps = ((entry.max - entry.min) / entry.step) + 1;
 							
@@ -282,13 +289,50 @@ define([
 							
 							//alert(outslid);
 							
+							if (steps == 2) {
+							
+							nslidernode = domConstruct.create("div");
+							this.sliderpane.domNode.appendChild(nslidernode); 
+							
+							if (entry.group.slice(0,4) == "muex") {
+								rorc = RadioButton;
+							} else {
+								rorc = CheckBox;
+							}
+							
+							   slider = new rorc({
+								name: entry.group,
+								value: entry.default,
+								index: entry.index,
+								minimum: entry.min,
+								maximum: entry.max,
+								title: entry.text,
+								checked: entry.default,
+								onChange: lang.hitch(this,this.updateService),
+								}, nslidernode);
+								
+								parser.parse()
+								
+							nslidernodeheader = domConstruct.create("div", {style:"display:inline", innerHTML: " " + entry.text + "<br>"});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);	
+							
+							nslidernodeheader = domConstruct.create("div", {style:"margin:3px", innerHTML: ""});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);
+							
+							} else {
+							
+							nslidernodetitle = domConstruct.create("div", {innerHTML: entry.text});
+							this.sliderpane.domNode.appendChild(nslidernodetitle);
+							
+ 							nslidernode = domConstruct.create("div");
+							this.sliderpane.domNode.appendChild(nslidernode); 
 							
 							labelsnode = domConstruct.create("ol", {"data-dojo-type":"dijit/form/HorizontalRuleLabels", container:"bottomDecoration", style:"height:1.5em;font-size:75%;color:gray;", innerHTML: outslid})
 							nslidernode.appendChild(labelsnode);
 					
 							
 							slider = new HorizontalSlider({
-								name: "slider",
+								name: entry.group,
 								value: entry.default,
 								minimum: entry.min,
 								maximum: entry.max,
@@ -302,6 +346,8 @@ define([
 							}, nslidernode);
 							
 							parser.parse()
+							
+							}
 							
 							this.sliders.push(slider);
 							
@@ -355,9 +401,35 @@ define([
 			   
 					this.BandFormula = new Array();
 					
+					cgroup = "";
+					
 					array.forEach(this.sliders, lang.hitch(this,function(entry, i){
 				
-						this.BandFormula.push("(" + entry.value + " * B" + entry.index + ")");
+						if (entry.name != cgroup) {
+						
+							if (cgroup != "") {
+							
+								this.BandFormula.push(cbf)
+							
+							}
+						
+							cbf = new Array();
+							
+							cgroup = entry.name;
+						
+						}
+						
+						if (entry.checked != undefined) {
+							if (entry.checked == true) {
+								entry.value = 1;
+							} else {
+								entry.value = 0;
+							}
+						}
+						
+						if (entry.value > 0) {
+							cbf.push("(" + entry.value + " * B" + entry.index + ")");
+						}
 						
 						array.forEach(this.geography.items, lang.hitch(this,function(item, j){
 						
@@ -371,13 +443,28 @@ define([
 					
 					}));
 					
+					this.BandFormula.push(cbf)
+					
+					console.log(this.BandFormula);
+					
+					outform = new Array(); 
+					
+					array.forEach(this.BandFormula, lang.hitch(this,function(bgroup, i){
+					
+					  if (bgroup.length > 0) {
+						outform.push("((" + bgroup.join(" + ") + ") / " + bgroup.length + ")");
+					  }
+					}));
+				
 					//alert(this.BandFormula.join(" + "));
+				
+					//alert(outform.join(" " + this.explorerObject.betweenGroups + " "))
 					
 					rasterFunction = new RasterFunction();
 					rasterFunction.functionName = "BandArithmetic";
 					arguments = {};
 					arguments.Method= 0;
-					arguments.BandIndexes = this.BandFormula.join(" + ");
+					arguments.BandIndexes = outform.join(" " + this.explorerObject.betweenGroups + " ");
 					rasterFunction.arguments = arguments; 
 					rasterFunction.variableName = "Raster";
 					this.currentLayer.setRenderingRule(rasterFunction);
