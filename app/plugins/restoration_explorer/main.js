@@ -3,9 +3,12 @@ define([
 		"framework/PluginBase",
 		
 		"esri/request",
+		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
 		"esri/layers/ImageServiceParameters",
 		"esri/layers/RasterFunction",
+		"esri/tasks/ImageServiceIdentifyTask",
+		"esri/tasks/ImageServiceIdentifyParameters",
 		"dijit/form/Button",
 		"dijit/form/DropDownButton",
 		"dijit/DropDownMenu", 
@@ -33,9 +36,12 @@ define([
        function (declare, 
 					PluginBase, 
 					ESRIRequest,
+					ArcGISDynamicMapServiceLayer,
 					ArcGISImageServiceLayer,
 					ImageServiceParameters,
 					RasterFunction,
+					ImageServiceIdentifyTask,
+					ImageServiceIdentifyParameters,
 					Button,
 					DropDownButton, 
 					DropDownMenu, 
@@ -60,7 +66,7 @@ define([
            return declare(PluginBase, {
 		       toolbarName: "Restoration Explorer",
                toolbarType: "sidebar",
-			   //showServiceLayersInLegend: true,
+			   showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                activate: function () { 
 			   
@@ -68,6 +74,10 @@ define([
 					
 						this.currentLayer.setVisibility(true);
 					
+					}
+					
+					if (this.ancillaryLayer != undefined) {
+						this.ancillaryLayer.setVisibility(true);		
 					}
 			   
 			   },
@@ -77,6 +87,12 @@ define([
 					if (this.currentLayer != undefined)  {
 					
 						this.currentLayer.setVisibility(false);
+					
+					}
+					
+					if (this.ancillaryLayer != undefined)  {
+					
+						this.ancillaryLayer.setVisibility(false);
 					
 					}
 			   
@@ -154,7 +170,11 @@ define([
 				
 			   changeGeography: function(geography, zoomto) {
 			   
-				
+						if (this.ancillaryLayer != undefined) {
+							  this.map.removeLayer(this.ancillaryLayer)		
+						}
+						
+						
 			   if (zoomto == undefined) {
 			   
 					zoomto = true;
@@ -237,15 +257,46 @@ define([
 					}
 					
 					this.button.set("label",geography.name);
+					
+					ancillaryon = new Array();
 			   
 					array.forEach(geography.items, lang.hitch(this,function(entry, i){
 					
-						
 						if (entry.group == undefined) {
 						
 							entry.group = "ungrouped";
 						
 						}
+
+						if (entry.type == "ancillary") {
+						
+							nslidernode = domConstruct.create("div");
+							this.sliderpane.domNode.appendChild(nslidernode); 
+							
+							   slider = new CheckBox({
+								name: entry.group,
+								value: entry.default,
+								index: entry.index,
+								minimum: entry.min,
+								maximum: entry.max,
+								title: entry.text,
+								checked: entry.default,
+								onChange: lang.hitch(this,function(e) {fx = lang.hitch(this,this.processAncillary);fx(e,entry)}),
+								}, nslidernode);
+								
+								parser.parse()
+								
+							if (entry.default == 1) {
+							  ancillaryon.push(entry)
+							}
+								
+							nslidernodeheader = domConstruct.create("div", {style:"display:inline", innerHTML: " " + entry.text + "<br>"});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);	
+							
+							nslidernodeheader = domConstruct.create("div", {style:"margin:3px", innerHTML: ""});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);
+							
+						} 
 						
 						if (entry.type == "header") {
 
@@ -394,6 +445,79 @@ define([
 						
 					this.map.addLayer(this.currentLayer);
 					
+						if (geography.ancillaryUrl != undefined) {
+							
+							this.ancillaryLayer = new ArcGISDynamicMapServiceLayer(geography.ancillaryUrl,{
+									useMapImage: true
+									}
+								  );
+							
+							
+							slayers = new Array();
+							array.forEach(ancillaryon, lang.hitch(this,function(entry, i){
+															
+								slayers.push(entry.index)
+							
+								
+							}))
+							
+							this.ancillaryLayer.setVisibleLayers(slayers)
+							
+							this.map.addLayer(this.ancillaryLayer);
+			   
+						}
+					
+			   
+			   },
+			   
+			   processAncillary: function(e,entry) {
+			   
+			   
+				slayers = this.ancillaryLayer.visibleLayers;
+				
+
+				if (e == false) {
+				
+				outslayers = new Array();
+				
+				for(i in slayers){
+					if(slayers[i] != entry.index){
+						  outslayers.push(slayers[i])
+						}
+				}
+				
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
+						
+							  if (gitem.type == "ancillary") {
+								if (gitem.index == entry.index) {
+								
+									gitem.default = 0;
+									
+								}
+							  }
+						
+						}));
+				
+				} else {
+				
+				slayers.push(entry.index)
+				outslayers = slayers;
+				
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
+						
+							  if (gitem.type == "ancillary") {
+								if (gitem.index == entry.index) {
+								
+									gitem.default = 1;
+									
+								}
+							  }
+						
+						}));
+				
+				}
+				
+				this.ancillaryLayer.setVisibleLayers(outslayers)
 			   
 			   },
 			   
@@ -431,13 +555,15 @@ define([
 							cbf.push("(" + entry.value + " * B" + entry.index + ")");
 						}
 						
-						array.forEach(this.geography.items, lang.hitch(this,function(item, j){
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
 						
-								if (item.index == entry.index) {
+							  if (gitem.type == "layer") {
+								if (gitem.index == entry.index) {
 								
-									item.default = entry.value;
+									gitem.default = entry.value;
 									
 								}
+							  }
 						
 						}));
 					
@@ -450,9 +576,13 @@ define([
 					outform = new Array(); 
 					
 					array.forEach(this.BandFormula, lang.hitch(this,function(bgroup, i){
-					
-					  if (bgroup.length > 0) {
-						outform.push("((" + bgroup.join(" + ") + ") / " + bgroup.length + ")");
+					 
+					 if (this.explorerObject.averageGroups == true) {
+						  if (bgroup.length > 0) {
+							outform.push("((" + bgroup.join(" + ") + ") / " + bgroup.length + ")");
+						  } 
+					  } else {
+						outform.push("(" + bgroup.join(" + ") + ")");
 					  }
 					}));
 				
@@ -460,13 +590,17 @@ define([
 				
 					//alert(outform.join(" " + this.explorerObject.betweenGroups + " "))
 					
+					
+					this.formula = outform.join(" " + this.explorerObject.betweenGroups + " ");
+					
 					rasterFunction = new RasterFunction();
 					rasterFunction.functionName = "BandArithmetic";
 					arguments = {};
 					arguments.Method= 0;
-					arguments.BandIndexes = outform.join(" " + this.explorerObject.betweenGroups + " ");
+					arguments.BandIndexes = this.formula;
 					rasterFunction.arguments = arguments; 
 					rasterFunction.variableName = "Raster";
+					
 					this.currentLayer.setRenderingRule(rasterFunction);
 					
 				   //legenddiv = domConstruct.create("img", {src:"height:400px", innerHTML: "<b>" + "Legend for Restoration"  + ":</b>"}); 
@@ -486,10 +620,71 @@ define([
 			   },
 			   
 			   identify: function(point, screenPoint, processResults) {
+							
+				   idTask = new esri.tasks.ImageServiceIdentifyTask(this.geography.url);
+				   identifyParams = new ImageServiceIdentifyParameters();
+				   identifyParams.returnGeometry = false;
+				   identifyParams.geometry = point;
+				   //identifyParams.renderingRule = this.renderingRule;
+				   
+       
+				   idTask.execute(identifyParams, lang.hitch(this,function(identifyResults) {
+				   
+								if (identifyResults.value != "NoData") {
+
+									idtable = '<br><table border="1"><tr><th width="50%"><center>Variable</center></th><th width="25%"><center>Value</center></th><th width="25%"><center>Weight</center></th></tr>'
+					
+									identifyValues = dojo.eval("[" + identifyResults.value + "]")
 									
-					console.log(point)	
-					console.log(screenPoint)	
-					processResults("Hello")
+									replacedFormula = this.formula;
+									varFormula = this.formula;
+									
+									array.forEach(identifyValues, lang.hitch(this,function(idval, j){
+										
+										replacedFormula = replacedFormula.replace("B"+(j+1), idval);
+										
+										array.forEach(this.sliders, lang.hitch(this,function(slid, i){
+											ci = j+1;
+											
+											if (slid.value == 0) {
+												outvaluetext = "Not Included";
+											} else if (slid.value == 1) {
+												if (slid.checked == true) {
+												  outvaluetext = "Included";
+												} else {
+												  outvaluetext = slid.value;
+												}
+											} else {
+											   outvaluetext = slid.value;
+											}
+											
+											if (ci == slid.index) {
+													idtable = idtable + ('</tr><tr><td>' + slid.title + '</td><td>' + idval.toFixed(2).replace(".00","") + '</td><td>' + outvaluetext + '</td></tr>')
+													varFormula = varFormula.replace("B"+(j+1), slid.title);
+											}
+										
+										}));
+									
+									}));
+									
+									//alert(dojo.eval(replacedFormula))
+									
+									console.log(identifyResults); 
+									
+									idtable = idtable + '</table>'
+									
+									processResults("<br> Value at Mouse Click: <b>" + dojo.eval(replacedFormula).toFixed(3).replace(".000", '') + "</b><br>" + idtable + "Formula: <br>" + varFormula);
+									
+								} else {
+								
+									processResults("");
+								
+								}
+								
+								}));
+					
+					//console.log(point)	
+					//console.log(screenPoint)
 						
 			   },
 				

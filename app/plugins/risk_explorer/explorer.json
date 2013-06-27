@@ -128,37 +128,10 @@
             "text": "Families in Poverty",
             "type": "layer",
 			"group": "2"
-        },
-		{
-            "type": "hr",
-			"group": "1"
-        },
-		{
-				"text": "Show Me:",
-				"type": "text"
-		},
-		{
-				"text": "Where coastal habitat loss will likely increase risk",
-				"type": "ancillary",
-				"default": 0,
-				"index": 0
-		},
-		{
-				"text": "Where oyster restoration might have the most effect on reducing risk",
-				"type": "ancillary",
-				"default": 0,
-				"index": 1
-		},		
-		{
-				"text": "A map of median residential property values",
-				"type": "ancillary",
-				"default": 0,
-				"index": 2
-		}		
+        }
     ],
     "name": "Florida",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Florida/ImageServer",
-	"ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/FL_SHOW_ME/MapServer"
+    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Florida/ImageServer"
 	},
 	{
     "items": [
