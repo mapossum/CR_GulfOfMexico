@@ -1,356 +1,464 @@
 {
-	name: "Gulf of Mexico Restoration Explorer",
-	text: "To begin, select a region to view." ,
-	globalText: 'Risk = Exposure x Vulnerability <br> Choose your variables to see your risk.',
-	betweenGroups: "*",
-	averageGroups: true,
-	regions:[
-	{
-    "items": [
-		{
-				"text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
-				"type": "text"
-		},
+    "name": "Gulf of Mexico Restoration Explorer",
+    "text": "To begin, select a region to view.",
+    "globalText": "Risk=ExposurexVulnerability<br>Chooseyourvariablestoseeyourrisk.",
+    "betweenGroups": "*",
+    "averageGroups": true,
+    "regions": [
         {
-            "default": 1.0,
-            "index": 1,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "With Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
+            "items": [
+                {
+                    "text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 1,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "With Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "default": 0,
+                    "index": 2,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Without Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 3,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Total Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 4,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Older Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 5,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Families in Poverty",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "type": "hr",
+                    "group": "1"
+                },
+                {
+                    "text": "Show Me:",
+                    "type": "text"
+                },
+                {
+                    "text": "Where coastal habitat loss will likely increase risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 0
+                },
+                {
+                    "text": "Where oyster restoration might have the most effect on reducing risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 1
+                },
+                {
+                    "text": "A map of median residential property values",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 2
+                }
+            ],
+            "ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Alabama_Risk_Explorer_Show_Me_Layers/MapServer",
+            "name": "Alabama",
+            "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Alabama/ImageServer"
         },
         {
-            "default": 0.0,
-            "index": 2,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Without Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
+            "items": [
+                {
+                    "text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 1,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "With Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "default": 0,
+                    "index": 2,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Without Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 3,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Total Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 4,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Older Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 5,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Families in Poverty",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "type": "hr",
+                    "group": "1"
+                },
+                {
+                    "text": "Show Me:",
+                    "type": "text"
+                },
+                {
+                    "text": "Where coastal habitat loss will likely increase risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 0
+                },
+                {
+                    "text": "Where oyster restoration might have the most effect on reducing risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 1
+                },
+                {
+                    "text": "A map of median residential property values",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 2
+                }
+            ],
+            "ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Florida_Risk_Explorer_Show_Me_Layers/MapServer",
+            "name": "Florida",
+            "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Florida/ImageServer"
         },
-		{
-				"text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
-				"type": "text"
-		},
         {
-            "default": 1.0,
-            "index": 3,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Total Population",
-            "type": "layer",
-			"group": "2"
+            "items": [
+                {
+                    "text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 1,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "With Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "default": 0,
+                    "index": 2,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Without Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 3,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Total Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 4,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Older Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 5,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Families in Poverty",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "type": "hr",
+                    "group": "1"
+                },
+                {
+                    "text": "Show Me:",
+                    "type": "text"
+                },
+                {
+                    "text": "Where coastal habitat loss will likely increase risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 0
+                },
+                {
+                    "text": "Where oyster restoration might have the most effect on reducing risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 1
+                },
+                {
+                    "text": "A map of median residential property values",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 2
+                }
+            ],
+            "ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Louisiana_Risk_Explorer_Show_Me_Layers/MapServer",
+            "name": "Louisiana",
+            "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Louisiana/ImageServer"
         },
         {
-            "default": 1.0,
-            "index": 4,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Older Population",
-            "type": "layer",
-			"group": "2"
+            "items": [
+                {
+                    "text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 1,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "With Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "default": 0,
+                    "index": 2,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Without Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 3,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Total Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 4,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Older Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 5,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Families in Poverty",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "type": "hr",
+                    "group": "1"
+                },
+                {
+                    "text": "Show Me:",
+                    "type": "text"
+                },
+                {
+                    "text": "Where coastal habitat loss will likely increase risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 0
+                },
+                {
+                    "text": "Where oyster restoration might have the most effect on reducing risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 1
+                },
+                {
+                    "text": "A map of median residential property values",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 2
+                }
+            ],
+            "ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Mississippi_Risk_Explorer_Show_Me_Layers/MapServer",
+            "name": "Mississippi",
+            "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Mississippi/ImageServer"
         },
         {
-            "default": 1.0,
-            "index": 5,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Families in Poverty",
-            "type": "layer",
-			"group": "2"
+            "items": [
+                {
+                    "text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 1,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "With Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "default": 0,
+                    "index": 2,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Without Sea Level Rise",
+                    "type": "layer",
+                    "group": "muex1"
+                },
+                {
+                    "text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
+                    "type": "text"
+                },
+                {
+                    "default": 1,
+                    "index": 3,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Total Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 4,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Older Population",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "default": 1,
+                    "index": 5,
+                    "max": 1,
+                    "min": 0,
+                    "step": 1,
+                    "text": "Families in Poverty",
+                    "type": "layer",
+                    "group": "2"
+                },
+                {
+                    "type": "hr",
+                    "group": "1"
+                },
+                {
+                    "text": "Show Me:",
+                    "type": "text"
+                },
+                {
+                    "text": "Where coastal habitat loss will likely increase risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 0
+                },
+                {
+                    "text": "Where oyster restoration might have the most effect on reducing risk",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 1
+                },
+                {
+                    "text": "A map of median residential property values",
+                    "type": "ancillary",
+                    "default": 0,
+                    "index": 2
+                }
+            ],
+            "ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Texas_Risk_Explorer_Show_Me_Layers/MapServer",
+            "name": "Texas",
+            "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Texas/ImageServer"
         }
-    ],
-    "name": "Alabama",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Alabama/ImageServer"
-	},
-	{
-    "items": [
-		{
-				"text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 1,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "With Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-        {
-            "default": 0.0,
-            "index": 2,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Without Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-		{
-				"text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 3,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Total Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 4,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Older Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 5,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Families in Poverty",
-            "type": "layer",
-			"group": "2"
-        },
-		{
-            "type": "hr",
-			"group": "1"
-        },
-		{
-				"text": "Show Me:",
-				"type": "text"
-		},
-		{
-				"text": "Where coastal habitat loss will likely increase risk",
-				"type": "ancillary",
-				"default": 0,
-				"index": 0
-		},
-		{
-				"text": "Where oyster restoration might have the most effect on reducing risk",
-				"type": "ancillary",
-				"default": 0,
-				"index": 1
-		},		
-		{
-				"text": "A map of median residential property values",
-				"type": "ancillary",
-				"default": 0,
-				"index": 2
-		}		
-    ],
-    "name": "Florida",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Florida/ImageServer",
-	"ancillaryUrl": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/FL_SHOW_ME/MapServer"
-	},
-	{
-    "items": [
-		{
-				"text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 1,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "With Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-        {
-            "default": 0.0,
-            "index": 2,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Without Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-		{
-				"text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 3,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Total Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 4,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Older Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 5,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Families in Poverty",
-            "type": "layer",
-			"group": "2"
-        }
-    ],
-    "name": "Louisiana",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Louisiana/ImageServer"
-	},
-	{
-    "items": [
-		{
-				"text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 1,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "With Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-        {
-            "default": 0.0,
-            "index": 2,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Without Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-		{
-				"text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 3,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Total Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 4,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Older Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 5,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Families in Poverty",
-            "type": "layer",
-			"group": "2"
-        }
-    ],
-    "name": "Mississippi",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Mississippi/ImageServer"
-	},
-	{
-    "items": [
-		{
-				"text": "<b>Exposure</b> is scored using seven bio-geophysical variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 1,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "With Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-        {
-            "default": 0.0,
-            "index": 2,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Without Sea Level Rise",
-            "type": "layer",
-			"group": "muex1"
-        },
-		{
-				"text": "<b>Vulnerability</b> is scored using your choice of social vulnerability variables",
-				"type": "text"
-		},
-        {
-            "default": 1.0,
-            "index": 3,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Total Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 4,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Older Population",
-            "type": "layer",
-			"group": "2"
-        },
-        {
-            "default": 1.0,
-            "index": 5,
-            "max": 1.0,
-            "min": 0.0,
-            "step": 1.0,
-            "text": "Families in Poverty",
-            "type": "layer",
-			"group": "2"
-        }
-    ],
-    "name": "Texas",
-    "url": "http://devags.coastalresilience.org:6080/arcgis/rest/services/Gulf_of_Mexico_Risk_Explorer/Texas/ImageServer"
-	}
-	]
+    ]
 }

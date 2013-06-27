@@ -29,7 +29,7 @@ define([
 		"dojo/on",
 		"dojo/parser",
         
-		"dojo/text!./explorer.json"
+		"dojo/text!./riskExplorer.json"
 		//plugins/restoration_explorer/
 		
        ],
