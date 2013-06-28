@@ -3,6 +3,7 @@ define([
 		"framework/PluginBase",
 		
 		"esri/request",
+		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/ArcGISImageServiceLayer",
 		"esri/layers/ImageServiceParameters",
 		"esri/layers/RasterFunction",
@@ -35,6 +36,7 @@ define([
        function (declare, 
 					PluginBase, 
 					ESRIRequest,
+					ArcGISDynamicMapServiceLayer,
 					ArcGISImageServiceLayer,
 					ImageServiceParameters,
 					RasterFunction,
@@ -64,7 +66,7 @@ define([
            return declare(PluginBase, {
 		       toolbarName: "Risk Explorer",
                toolbarType: "sidebar",
-			   //showServiceLayersInLegend: true,
+			   showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                activate: function () { 
 			   
@@ -72,6 +74,10 @@ define([
 					
 						this.currentLayer.setVisibility(true);
 					
+					}
+					
+					if (this.ancillaryLayer != undefined) {
+						this.ancillaryLayer.setVisibility(true);		
 					}
 			   
 			   },
@@ -81,6 +87,12 @@ define([
 					if (this.currentLayer != undefined)  {
 					
 						this.currentLayer.setVisibility(false);
+					
+					}
+					
+					if (this.ancillaryLayer != undefined)  {
+					
+						this.ancillaryLayer.setVisibility(false);
 					
 					}
 			   
@@ -105,6 +117,23 @@ define([
 					
 					this.textnode = domConstruct.create("div", { innerHTML: "<p style='padding:8px'>" + this.explorerObject.text + "</p>" });
 					dom.byId(this.container).appendChild(this.textnode);
+					
+					pslidernode = domConstruct.create("span", { innerHTML: "<span style='padding:5px'> </span>" });
+					dom.byId(this.container).appendChild(pslidernode); 
+					
+					nslidernode = domConstruct.create("span");
+					dom.byId(this.container).appendChild(nslidernode); 
+							
+							   this.MainCheck = new CheckBox({
+								name: "ExplorerCheck",
+								value: 1,
+								title: "Toggle Visibility of the Explorer Layer",
+								checked: 1,
+								style: "display: none;",
+								onChange: lang.hitch(this,function(e) {this.currentLayer.setVisibility(e)}),
+								}, nslidernode);
+			
+								parser.parse()
 					
 					menu = new DropDownMenu({ style: "display: none;"});
 					
@@ -158,7 +187,11 @@ define([
 				
 			   changeGeography: function(geography, zoomto) {
 			   
-				
+						if (this.ancillaryLayer != undefined) {
+							  this.map.removeLayer(this.ancillaryLayer)		
+						}
+						
+						
 			   if (zoomto == undefined) {
 			   
 					zoomto = true;
@@ -241,15 +274,46 @@ define([
 					}
 					
 					this.button.set("label",geography.name);
+					
+					ancillaryon = new Array();
 			   
 					array.forEach(geography.items, lang.hitch(this,function(entry, i){
 					
-						
 						if (entry.group == undefined) {
 						
 							entry.group = "ungrouped";
 						
 						}
+
+						if (entry.type == "ancillary") {
+						
+							nslidernode = domConstruct.create("div");
+							this.sliderpane.domNode.appendChild(nslidernode); 
+							
+							   slider = new CheckBox({
+								name: entry.group,
+								value: entry.default,
+								index: entry.index,
+								minimum: entry.min,
+								maximum: entry.max,
+								title: entry.text,
+								checked: entry.default,
+								onChange: lang.hitch(this,function(e) {fx = lang.hitch(this,this.processAncillary);fx(e,entry)}),
+								}, nslidernode);
+								
+								parser.parse()
+								
+							if (entry.default == 1) {
+							  ancillaryon.push(entry)
+							}
+								
+							nslidernodeheader = domConstruct.create("div", {style:"display:inline", innerHTML: " " + entry.text + "<br>"});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);	
+							
+							nslidernodeheader = domConstruct.create("div", {style:"margin:3px", innerHTML: ""});
+							this.sliderpane.domNode.appendChild(nslidernodeheader);
+							
+						} 
 						
 						if (entry.type == "header") {
 
@@ -395,9 +459,86 @@ define([
 							console.log("Update Ended...");
 							domAttr.set(this.refreshnode, "style", "display:none");
 						} ));
-						
+					
+					this.MainCheck.setChecked(true)
+					
+					domStyle.set(this.MainCheck.domNode, "display", "");
+					
 					this.map.addLayer(this.currentLayer);
 					
+						if (geography.ancillaryUrl != undefined) {
+							
+							this.ancillaryLayer = new ArcGISDynamicMapServiceLayer(geography.ancillaryUrl,{
+									useMapImage: true
+									}
+								  );
+							
+							
+							slayers = new Array();
+							array.forEach(ancillaryon, lang.hitch(this,function(entry, i){
+															
+								slayers.push(entry.index)
+							
+								
+							}))
+							
+							this.ancillaryLayer.setVisibleLayers(slayers)
+							
+							this.map.addLayer(this.ancillaryLayer);
+			   
+						}
+					
+			   
+			   },
+			   
+			   processAncillary: function(e,entry) {
+			   
+			   
+				slayers = this.ancillaryLayer.visibleLayers;
+				
+
+				if (e == false) {
+				
+				outslayers = new Array();
+				
+				for(i in slayers){
+					if(slayers[i] != entry.index){
+						  outslayers.push(slayers[i])
+						}
+				}
+				
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
+						
+							  if (gitem.type == "ancillary") {
+								if (gitem.index == entry.index) {
+								
+									gitem.default = 0;
+									
+								}
+							  }
+						
+						}));
+				
+				} else {
+				
+				slayers.push(entry.index)
+				outslayers = slayers;
+				
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
+						
+							  if (gitem.type == "ancillary") {
+								if (gitem.index == entry.index) {
+								
+									gitem.default = 1;
+									
+								}
+							  }
+						
+						}));
+				
+				}
+				
+				this.ancillaryLayer.setVisibleLayers(outslayers)
 			   
 			   },
 			   
@@ -435,13 +576,15 @@ define([
 							cbf.push("(" + entry.value + " * B" + entry.index + ")");
 						}
 						
-						array.forEach(this.geography.items, lang.hitch(this,function(item, j){
+						array.forEach(this.geography.items, lang.hitch(this,function(gitem, j){
 						
-								if (item.index == entry.index) {
+							  if (gitem.type == "layer") {
+								if (gitem.index == entry.index) {
 								
-									item.default = entry.value;
+									gitem.default = entry.value;
 									
 								}
+							  }
 						
 						}));
 					
@@ -484,7 +627,7 @@ define([
 				   //legenddiv = domConstruct.create("img", {src:"height:400px", innerHTML: "<b>" + "Legend for Restoration"  + ":</b>"}); 
 				   //dom.byId(this.legendContainer).appendChild(this.legenddiv);
 				   
-				   this.legendContainer.innerHTML = '<div style="margin-bottom:7px">Restoration Explorer</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="90px"><rect x="0" y ="60" width="30" height="20" style="fill:rgb(0,0,0);stroke-width:1;stroke:rgb(0,0,0)" /><rect x="0" y ="30" width="30" height="20" style="fill:rgb(125,125,125);stroke-width:1;stroke:rgb(0,0,0)" /><rect width="30" height="20" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" /><text x="35" y="15" fill="black">High</text><text x="35" y="45" fill="black">Medium</text><text x="35" y="75" fill="black">Low</text></svg>'
+				   this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + '</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="90px"><rect x="0" y ="60" width="30" height="20" style="fill:rgb(0,0,0);stroke-width:1;stroke:rgb(0,0,0)" /><rect x="0" y ="30" width="30" height="20" style="fill:rgb(125,125,125);stroke-width:1;stroke:rgb(0,0,0)" /><rect width="30" height="20" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" /><text x="35" y="15" fill="black">High</text><text x="35" y="45" fill="black">Medium</text><text x="35" y="75" fill="black">Low</text></svg>'
 				   
 				   //noleg = dom.byId("legend-0_msg")
 				   //domStyle.set(noleg, "display", "none");

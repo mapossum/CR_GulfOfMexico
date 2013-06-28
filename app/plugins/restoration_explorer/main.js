@@ -29,7 +29,7 @@ define([
 		"dojo/on",
 		"dojo/parser",
         
-		"dojo/text!./riskExplorer.json"
+		"dojo/text!./explorer.json"
 		//plugins/restoration_explorer/
 		
        ],
@@ -117,6 +117,23 @@ define([
 					
 					this.textnode = domConstruct.create("div", { innerHTML: "<p style='padding:8px'>" + this.explorerObject.text + "</p>" });
 					dom.byId(this.container).appendChild(this.textnode);
+					
+					pslidernode = domConstruct.create("span", { innerHTML: "<span style='padding:5px'> </span>" });
+					dom.byId(this.container).appendChild(pslidernode); 
+					
+					nslidernode = domConstruct.create("span");
+					dom.byId(this.container).appendChild(nslidernode); 
+							
+							   this.MainCheck = new CheckBox({
+								name: "ExplorerCheck",
+								value: 1,
+								title: "Toggle Visibility of the Explorer Layer",
+								checked: 1,
+								style: "display: none;",
+								onChange: lang.hitch(this,function(e) {this.currentLayer.setVisibility(e)}),
+								}, nslidernode);
+			
+								parser.parse()
 					
 					menu = new DropDownMenu({ style: "display: none;"});
 					
@@ -442,7 +459,11 @@ define([
 							console.log("Update Ended...");
 							domAttr.set(this.refreshnode, "style", "display:none");
 						} ));
-						
+					
+					this.MainCheck.setChecked(true)
+					
+					domStyle.set(this.MainCheck.domNode, "display", "");
+					
 					this.map.addLayer(this.currentLayer);
 					
 						if (geography.ancillaryUrl != undefined) {
@@ -606,7 +627,7 @@ define([
 				   //legenddiv = domConstruct.create("img", {src:"height:400px", innerHTML: "<b>" + "Legend for Restoration"  + ":</b>"}); 
 				   //dom.byId(this.legendContainer).appendChild(this.legenddiv);
 				   
-				   this.legendContainer.innerHTML = '<div style="margin-bottom:7px">Restoration Explorer</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="90px"><rect x="0" y ="60" width="30" height="20" style="fill:rgb(0,0,0);stroke-width:1;stroke:rgb(0,0,0)" /><rect x="0" y ="30" width="30" height="20" style="fill:rgb(125,125,125);stroke-width:1;stroke:rgb(0,0,0)" /><rect width="30" height="20" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" /><text x="35" y="15" fill="black">High</text><text x="35" y="45" fill="black">Medium</text><text x="35" y="75" fill="black">Low</text></svg>'
+				   this.legendContainer.innerHTML = '<div style="margin-bottom:7px">' + this.toolbarName + '</div><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100px" height="90px"><rect x="0" y ="60" width="30" height="20" style="fill:rgb(0,0,0);stroke-width:1;stroke:rgb(0,0,0)" /><rect x="0" y ="30" width="30" height="20" style="fill:rgb(125,125,125);stroke-width:1;stroke:rgb(0,0,0)" /><rect width="30" height="20" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)" /><text x="35" y="15" fill="black">High</text><text x="35" y="45" fill="black">Medium</text><text x="35" y="75" fill="black">Low</text></svg>'
 				   
 				   //noleg = dom.byId("legend-0_msg")
 				   //domStyle.set(noleg, "display", "none");
